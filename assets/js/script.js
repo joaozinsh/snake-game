@@ -1,6 +1,7 @@
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
+let gameControll;
 
 let snake = [];
 snake[0] = {
@@ -14,6 +15,17 @@ let food = {
 }
 
 let direction = "right";
+
+let score = 0;
+let elementScore = document.getElementById("score")
+elementScore.innerHTML = "Score: "+score;
+
+let best = 0;
+let elementBest = document.getElementById("best")
+elementBest.innerHTML = "Best: "+best;
+
+let buttonStart = document.getElementById("startGame");
+let buttonRestart = document.getElementById("restartGame");
 
 function criarBG() {
     context.fillStyle = "lightgreen";
@@ -32,6 +44,10 @@ function criarComida() {
     context.fillRect(food.x, food.y, box, box);
 }
 
+criarBG();
+criarCobrinha();
+criarComida();
+
 document.addEventListener('keydown', movimento);
 
 function movimento(event){
@@ -41,7 +57,7 @@ function movimento(event){
     if (event.keyCode == 40 && direction != "up") direction = "down";
 }
 
-function iniciarJogo() {
+function jogo() {
     if (snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
     if (snake[0].x < 0 * box && direction == "left") snake[0].x = 16 * box;
     if (snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
@@ -49,8 +65,15 @@ function iniciarJogo() {
 
     for (i = 1; i < snake.length; i ++) {
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
-            clearInterval(jogo);
+            clearInterval(gameControll);
             alert("Game Over :(");
+
+            buttonRestart.style.display = "block";
+
+            if (score >= best) {
+                best = score;
+                elementBest.innerHTML = "Best: "+best;
+            }
         }
     }
 
@@ -71,6 +94,9 @@ function iniciarJogo() {
     } else {
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
+
+        score += 1;
+        elementScore.innerHTML = "Score: "+score;
     }
     
     let newHead = {
@@ -81,4 +107,28 @@ function iniciarJogo() {
     snake.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+function startGame() {
+    gameControll = setInterval(jogo, 100);
+    buttonStart.style.display = "none";
+}
+
+function restartGame() {
+    snake = [];
+    snake[0] = {
+        x: 8 * box,
+        y: 8 * box
+    }
+
+    food = {
+        x: Math.floor(Math.random() * 15 + 1) * box,
+        y: Math.floor(Math.random() * 15 + 1) * box
+    }
+
+    direction = "right";
+
+    score = 0;
+    elementScore.innerHTML = "Score: "+score;
+
+    gameControll = setInterval(jogo, 100);
+    buttonRestart.style.display = "none";
+}
