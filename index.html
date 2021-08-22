@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/style.css">
     <script defer src="assets/js/script.js"></script> 
 
@@ -12,8 +13,10 @@
 </head>
 <body>
     <h1>SNAKE GAME</h1>
-    <h3 id="score"></h3>
-    <h3 id="best"></h3>
+    <div class="placar">
+        <h3 id="score"></h3>
+        <h3 id="best"></h3>
+    </div>
     <canvas id="snake" width="512" height="512"></canvas>
     <button id="startGame" onclick="startGame()">Start Game</button>
     <button id="restartGame" onclick="restartGame()" style="display: none;">Restart Game</button>
