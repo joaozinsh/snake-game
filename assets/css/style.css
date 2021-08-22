@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
+    height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
