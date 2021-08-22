@@ -2,6 +2,8 @@ let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
 let gameControll;
+let statusGame = false;
+let firtPass = 0;
 
 let snake = [];
 snake[0] = {
@@ -24,8 +26,10 @@ let best = 0;
 let elementBest = document.getElementById("best")
 elementBest.innerHTML = "Best: "+best;
 
-let buttonStart = document.getElementById("startGame");
-let buttonRestart = document.getElementById("restartGame");
+let elementStart = document.getElementById("start");
+let elementRestart = document.getElementById("restart");
+let elementGameOver = document.getElementById("game-over");
+let elementBestScore = document.getElementById("best-score");
 
 function criarBG() {
     context.fillStyle = "lightgreen";
@@ -66,14 +70,19 @@ function jogo() {
     for (i = 1; i < snake.length; i ++) {
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
             clearInterval(gameControll);
-            alert("Game Over :(");
+            elementGameOver.style.display = "block";
 
-            buttonRestart.style.display = "block";
+            elementRestart.style.display = "block";
 
             if (score >= best) {
                 best = score;
                 elementBest.innerHTML = "Best: "+best;
+                elementBestScore.style.display = "block";
+                elementBestScore.innerHTML = "NEW BEST SCORE: "+best;
             }
+
+            statusGame = false;
+            return false;
         }
     }
 
@@ -107,9 +116,21 @@ function jogo() {
     snake.unshift(newHead);
 }
 
+addEventListener('keyup', function(event){
+  if (event.keyCode == 13 && statusGame == false) {
+      if (firtPass == 0) {
+        startGame();
+      } else {
+        restartGame();
+      }
+  }  
+});
+
 function startGame() {
     gameControll = setInterval(jogo, 100);
-    buttonStart.style.display = "none";
+    elementStart.style.display = "none";
+    statusGame = true;
+    firtPass = 1;
 }
 
 function restartGame() {
@@ -130,5 +151,7 @@ function restartGame() {
     elementScore.innerHTML = "Score: "+score;
 
     gameControll = setInterval(jogo, 100);
-    buttonRestart.style.display = "none";
+    elementGameOver.style.display = "none";
+    elementRestart.style.display = "none";
+    elementBestScore.style.display = "none";
 }

@@ -18,22 +18,22 @@ canvas {
     flex-direction: row;
 }
 
-.placar h3:first-child {
+.placar h4:first-child {
     margin-right: 50px;
 }
 
-button {
-    font-family: 'Press Start 2P', cursive;
-    margin-top: 30px;
-    height: 50px;
-    padding: 0px 20px;
-    border: none;
-    background-color: lightgrey;
-    border: 2px solid white;
-    font-size: 14px;
+#start, #restart {
+    margin-top: 40px;
 }
 
-button:hover {
-    border: 2px solid black;
-    cursor: pointer;
+h4 {
+    margin: 15px 0;
+}
+
+#game-over {
+    color: red;
+}
+
+#best-score {
+    color: green;
 }
