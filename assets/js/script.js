@@ -151,6 +151,8 @@ function restartGame() {
     elementScore.innerHTML = "Score: "+score;
 
     gameControll = setInterval(jogo, 100);
+    statusGame = true;
+    
     elementGameOver.style.display = "none";
     elementRestart.style.display = "none";
     elementBestScore.style.display = "none";
